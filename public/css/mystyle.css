@@ -1,0 +1,7 @@
+body::after,
+body::before {
+
+    max-width: 100%;
+    overflow-x: hidden;
+
+}
