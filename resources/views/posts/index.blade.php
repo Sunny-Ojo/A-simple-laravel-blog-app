@@ -21,7 +21,10 @@
         {{$posts->links()}}
         @else
         <h2>{{'No Posts Found'}}</h2>
-        <a href="/posts/create" class="btn btn-primary">Create a Post</a>
+        @if (!auth::guest())
+              <a href="/posts/create" class="btn btn-primary">Create a Post</a>
+        @endif
+
         <br>
     @endif
 @endsection
