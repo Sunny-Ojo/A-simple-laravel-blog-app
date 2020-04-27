@@ -4,9 +4,9 @@
 $allmsg = count($msg);
 ?>      <div class="card-hearder text-center">
 @if ($allmsg === 1)
-<h1>{{$allmsg}} Message Received From Users</h1>
+<h1 class="breadcrumb">{{$allmsg}} Message Received From Users</ class="breadcrumb">
 @else
-<h1>{{$allmsg}} Messages Received From Users</h1>
+<h1 class="breadcrumb">{{$allmsg}} Messages Received From Users</h1>
 @endif
 </div>
     @if (count($msg) > 0)
@@ -36,7 +36,7 @@ $allmsg = count($msg);
 
     @endforeach
     @else
-    <h1>No Messages</h1>
+    <h4 class="text-danger">No Messages</h4>
 
     @endif
 @endsection

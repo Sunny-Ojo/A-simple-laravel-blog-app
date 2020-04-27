@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\post;
 use App\User;
 
 class HomeController extends Controller
@@ -22,6 +23,12 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
+    {
+        $cat = post::orderBy('created_at', 'desc')->paginate(10);
+        $posts = post::orderBy('created_at', 'desc')->paginate(10);
+        return view('/posts.index')->with(['posts' => $posts, 'cat' => $cat]);
+    }
+    public function home()
     {
 
         $user_id = auth()->user()->id;

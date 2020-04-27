@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\post;
+use App\User;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,11 +25,11 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
-        $posts = post::orderBy('created_at', 'desc')->paginate(3);
-        return view('/posts.index')->with('posts', $posts);
+        $cat = post::orderBy('created_at', 'desc')->paginate(10);
+        $posts = post::orderBy('created_at', 'desc')->paginate(10);
+        return view('/posts.index')->with(['posts' => $posts, 'cat' => $cat]);
     }
 
     /**
@@ -52,7 +55,8 @@ class PostsController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
-            'image' => 'image | nullable | max:3999',
+            'category' => 'required',
+            'image' => 'image | nullable |',
 
         ]);
         if ($request->hasFile('image')) {
@@ -67,9 +71,12 @@ class PostsController extends Controller
         }
         $post = new post;
         $post->title = $request->title;
+        $post->category = $request->category;
         $post->body = $request->body;
+        $post->slug = $request->title;
         $post->image = $imagetostore;
         $post->user_id = auth()->user()->id;
+        $post->author = auth()->user()->name;
         $post->save();
         return redirect('/posts')->with('success', 'Post created successfully');
     }
@@ -82,8 +89,10 @@ class PostsController extends Controller
      */
     public function show($id)
     {
+
+        $replies = DB::select('select * from comments where post_id = ?', [$id]);
         $posts = post::find($id);
-        return view('/posts.show')->with('posts', $posts);
+        return view('/posts.show')->with(['post' => $posts, 'reply' => $replies]);
     }
 
     /**
@@ -115,8 +124,9 @@ class PostsController extends Controller
 
         $this->validate($request, [
             'title' => 'required',
+            'category' => 'required',
             'body' => 'required',
-            'image' => 'image | nullable | max:3999',
+            'image' => 'image | nullable',
 
         ]);
         if ($request->hasFile('image')) {
@@ -131,12 +141,17 @@ class PostsController extends Controller
         }
         $post = post::find($id);
         $post->title = $request->title;
+        $post->category = $request->category;
+
         $post->body = $request->body;
-        $post->image = $imagetostore;
+        if ($request->hasFile('image')) {
+            $post->image = $imagetostore;
+
+        }
         $post->user_id = auth()->user()->id;
         $post->save();
 
-        return redirect('/posts')->with('success', 'Post Updated successfully');
+        return redirect()->route('posts.show', [$id])->with('success', 'Post Updated successfully');
     }
 
     /**

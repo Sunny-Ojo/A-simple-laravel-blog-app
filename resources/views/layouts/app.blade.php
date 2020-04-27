@@ -1,6 +1,4 @@
-@php
-    $date = date('Y');
-@endphp
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,8 +24,28 @@
     @yield('content')
 
     <br>
-          <div class="footer bg-dark">
-        <h2 class="text-center text-white ">All rights reserved... copyright &copy; 2018 - <?php echo $date; ?> </h2>
+          <div class="footer bg-dark text-white " align="center">
+              <ul class="inline pt-2 text-decoration-none d-inline pl-3">
+                  <li><a href="/about" class="text-white"> About Smart Blog</a></li>
+                  <li class="">
+                    <a class="text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+
+                    <a href="https://twitter.com/SunnyOjo4" target="blank"  class="text-primary btn btn-social-icon btn-twitter">
+                        <span class="fa fa-twitter fa-2x"></span>
+                      </a>
+                    <a href="https://web.facebook.com/SunnyOjoNjoku" target="blank" class=" text-info btn btn-social-icon btn-facebook">
+                        <span class="fa fa-facebook fa-2x"></span>
+                      </a>
+
+
+                    <a href="https://www.instagram.com/ojoskid_sunny/" target="blank" style="color:#f66d9b" class="btn btn-social-icon btn-instagram">
+                        <span class="fa fa-instagram fa-2x "></span>
+                      </a>
+
+                  </ul>
+
+        <p class="pb-2 text-center text-white "> copyright &copy; <ins>Sunshinecoder's</ins> Smart-blogging, 2018 - {{ date('Y') }} </p>
         </div>
     </div>
 

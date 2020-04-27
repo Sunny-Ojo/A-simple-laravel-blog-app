@@ -15,16 +15,17 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
-                <!-- Authentication Links -->   <li class="nav-item">
+                <!-- Authentication Links -->
+                @if (!Auth::guest())
+                <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact Us</a>
                 </li>
 
+                @endif
+
                 <li class="nav-item">
-                    <a class="nav-link" href="/about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/privacy">
-                      Privacy-Policy</a>
+                    <a class="nav-link" href="/about">
+                      About-us</a>
                 </li>
                 @guest
 
@@ -39,11 +40,11 @@
                 @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <i class="fa fa-user"> {{ Auth::user()->name }}</i>  <span class="caret"></span>
+                {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/home">
+                            <a class="dropdown-item" href="dashboard">
                               <i class="fa fa-dashboard">  My Dashboard</i>
                             </a>
                             <a class="dropdown-item" href="/posts">
@@ -52,9 +53,7 @@
                             <a class="dropdown-item" href="/posts/create">
                              <i class="fa fa-book"> Create a post</i>
                             </a>
-                            <a class="dropdown-item" href="/messages">
-                               <i class="fa fa-address-book-o"> Messages</i>
-                            </a>
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

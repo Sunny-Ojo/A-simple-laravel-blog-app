@@ -10,7 +10,8 @@
                 <label for="category">Select a category</label>
                 <select name="category" id="category">
                     <option value="all">All posts</option>
-                    @if (count($cat)> 0)
+
+               @if (count($cat)> 0)
                    @foreach ($cat as $item)
                 <option value="{{$item->category}}">{{$item->category}}</option>
                    @endforeach
@@ -27,11 +28,11 @@
 
               <div class="col-md-4 col-lg-4">
 
-        <img style="width:100%; height:280px" src="/storage/images/{{$post->image}}" alt="cover_image">
+        <img style="width:100%; height:280px" src="/storage/images/{{$post->image}}" alt="">
             </div>
             <div class="col-md-8 col-lg-8 card-text ">
 
-            <h4 class=" text-bold mt-2"><b>{{$post->title}}</b></h4>
+            <h1 class="lead mt-2">{{$post->title}}</h1>
             <p > {{substr($post->body, 0, 300)}} <a href="/posts/{{$post->id}}">... see more</a></p >
             <i>Time: {{$post->created_at->diffForHumans()}}</i>
                   <p>Posted by <b>{{$post->author}}</b></p>
@@ -53,13 +54,11 @@
 
         {{$posts->links()}}
         @else
-       <div class=" my-5">
-        <h2 class="text-center">{{'No Posts Found'}}</h2>
+        <h2>{{'No Posts Found'}}</h2>
         @if (!auth::guest())
               <a href="/posts/create" class="btn btn-primary">Create a Post</a>
         @endif
 
         <br>
-       </div>
     @endif
 @endsection
